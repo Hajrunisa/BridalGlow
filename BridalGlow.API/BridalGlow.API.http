@@ -1,0 +1,22 @@
+@BridalGlow.API_HostAddress = http://localhost:5140
+
+GET {{BridalGlow.API_HostAddress}}/api/Health
+Accept: application/json
+
+###
+
+POST {{BridalGlow.API_HostAddress}}/api/Auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "test"
+}
+
+###
+
+GET {{BridalGlow.API_HostAddress}}/api/Users/me
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+###

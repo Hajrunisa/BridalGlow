@@ -1,0 +1,15 @@
+**/.git
+**/.vs
+**/.idea
+**/.env
+**/bin
+**/obj
+UI/**/build
+UI/**/.dart_tool
+UI/**/.flutter-plugins
+UI/**/.flutter-plugins-dependencies
+**/postgres_data
+**/*.user
+**/*.suo
+Thumbs.db
+.DS_Store

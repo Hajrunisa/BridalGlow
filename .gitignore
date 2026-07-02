@@ -1,0 +1,41 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Environment
+.env
+
+## IDE
+.vs/
+.idea/
+*.swp
+*~
+
+## OS
+Thumbs.db
+.DS_Store
+
+## Flutter
+UI/**/build/
+UI/**/.dart_tool/
+UI/**/.flutter-plugins
+UI/**/.flutter-plugins-dependencies
+UI/**/.packages
+UI/**/windows/flutter/ephemeral/
+UI/**/linux/flutter/ephemeral/
+UI/**/macos/Flutter/ephemeral/
+
+## Docker
+**/postgres_data/
+## Visual Studio
+.vscode/
+
+## Flutter metadata
+UI/**/.metadata
+
+## Launch settings
+*.slnLaunch.user

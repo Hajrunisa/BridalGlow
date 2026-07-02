@@ -1,0 +1,89 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bridalglow-postgres
+    environment:
+      POSTGRES_DB: 200208
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - bridalglow_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: bridalglow-rabbitmq
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bridalglow-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DB_MODE: local
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: 200208
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT__SECRET_KEY: change_this_to_a_long_random_secret_key_at_least_32_chars_for_dev
+      JWT__ISSUER: BridalGlow
+      JWT__AUDIENCE: BridalGlow
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VIRTUALHOST: /
+      RECOMMENDER_SIMILARITY_RECOMPUTE_INTERVAL_HOURS: 24
+      RECOMMENDER_SNAPSHOT_RECOMPUTE_INTERVAL_HOURS: 6
+    ports:
+      - "5140:8080"
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: bridalglow-worker
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      DB_MODE: local
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: 200208
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VIRTUALHOST: /
+      RECOMMENDER_SIMILARITY_RECOMPUTE_INTERVAL_HOURS: 24
+      RECOMMENDER_SNAPSHOT_RECOMPUTE_INTERVAL_HOURS: 6
+
+volumes:
+  bridalglow_pgdata:
