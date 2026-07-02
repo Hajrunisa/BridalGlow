@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.google.android.gms</groupId>
+  <artifactId>play-services-tapandpay</artifactId>
+  <version>17.1.2</version>
+  <packaging>aar</packaging>
+  <name>play-services-tapandpay stub</name>
+  <description>
+    Stub artifact. play-services-tapandpay is required at runtime only for NFC push-provisioning
+    (adding virtual cards to Google Wallet). BridalGlow does not use that feature; this stub
+    satisfies Gradle dependency resolution without providing any real implementation.
+  </description>
+</project>

@@ -1,5 +1,12 @@
 allprojects {
     repositories {
+        // local-stubs must come before google()/mavenCentral() so that Gradle
+        // resolves play-services-tapandpay:17.1.2 from the project-committed stub
+        // instead of trying to download it from Google Maven (where it is not
+        // publicly available). The stub is an empty AAR — it satisfies dependency
+        // resolution for stripe-android-issuing-push-provisioning without adding
+        // any real NFC/push-provisioning code that BridalGlow does not use.
+        maven { url = uri("${rootProject.projectDir}/local-stubs") }
         google()
         mavenCentral()
     }

@@ -50,5 +50,4 @@ flutter {
 
 dependencies {
     implementation("com.google.android.material:material:1.11.0")
-    implementation("com.stripe:stripe-android:20.36.1")
 }
